@@ -26,3 +26,4 @@ export default function Navbar({ view, setView }: Props) {
     </div>
   );
 }
+
