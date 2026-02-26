@@ -81,6 +81,7 @@ export default function FormValidation() {
     localStorage.setItem("users", JSON.stringify(updatedUsers));
 
     alert("User Added Successfully!");
+    console.log("USERLIST",updatedUsers)
     setForm(defaultForm);
   };
 
