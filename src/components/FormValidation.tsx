@@ -1,89 +1,12 @@
-import { useState, useEffect } from "react";
-import type { FormData, FormErrors, User } from "../types/formTypes";
-
-const defaultForm: FormData = {
-  name: "",
-  age: "",
-  email: "",
-  password: "",
-};
-
-function getSavedUsers(): User[] {
-  const saved = localStorage.getItem("users");
-  return saved ? JSON.parse(saved) : [];
-}
+import { useForm } from "../hooks/useForm";
 
 export default function FormValidation() {
-  const [form, setForm] = useState<FormData>(defaultForm);
-  const [users, setUsers] = useState<User[]>(() => getSavedUsers());
-  const [errors, setErrors] = useState<FormErrors>({});
-
-  const nameRegex = /^[A-Za-z\s]+$/;
-  const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
-  const passwordRegex =
-    /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
-
-  useEffect(() => {
-    localStorage.setItem("users", JSON.stringify(users));
-  }, [users]);
-
-  const validate = (field: keyof FormData, value: string) => {
-    let error = "";
-
-    switch (field) {
-      case "name":
-        if (!value) error = "Name required";
-        else if (!nameRegex.test(value))
-          error = "Only alphabets allowed";
-        break;
-
-      case "age":
-        if (!value) error = "Age required";
-        else if (Number(value) < 18)
-          error = "Age must be 18+";
-        break;
-
-      case "email":
-        if (!value) error = "Email required";
-        else if (!emailRegex.test(value))
-          error = "Invalid email format";
-        else if (getSavedUsers().some((u) => u.email === value))
-          error = "Email already exists";
-        break;
-
-      case "password":
-        if (!value) error = "Password required";
-        else if (!passwordRegex.test(value))
-          error =
-            "Min 8 chars, 1 uppercase, 1 number, 1 special char";
-        break;
-    }
-
-    setErrors((prev) => ({ ...prev, [field]: error }));
-  };
-
-  const handleChange = (field: keyof FormData, value: string) => {
-    setForm((prev) => ({ ...prev, [field]: value }));
-    validate(field, value);
-  };
-
-  const handleSubmit = () => {
-    const hasError = Object.values(errors).some(Boolean);
-    const hasEmpty = Object.values(form).some((v) => !v);
-
-    if (hasError || hasEmpty) {
-      alert("Please fix errors first");
-      return;
-    }
-
-    const updatedUsers = [...users, form];
-    setUsers(updatedUsers);
-    localStorage.setItem("users", JSON.stringify(updatedUsers));
-
-    alert("User Added Successfully!");
-    console.log("USERLIST",updatedUsers)
-    setForm(defaultForm);
-  };
+  const {
+    form,
+    errors,
+    handleChange,
+    handleSubmit,
+  } = useForm();
 
   return (
     <div className="card">
@@ -92,7 +15,10 @@ export default function FormValidation() {
       <input
         value={form.name}
         placeholder="Name"
-        onChange={(e) => handleChange("name", e.target.value)}
+        onChange={(e) => {
+          const onlyLetters = e.target.value.replace(/[^a-zA-Z\s]/g, "");
+          handleChange("name", onlyLetters);
+        }}
       />
       <small className="error">{errors.name}</small>
 

@@ -58,3 +58,136 @@ and interactive UI.
 -   Keys help React identify which items changed.
 -   Using stable unique IDs improves performance.
 -   Avoid using index as key in dynamic lists.
+---------------------------------------
+
+Week 2 summary
+
+1. useState
+
+useState adds state to functional components.
+
+const [state, setState] = useState(initialValue)
+
+Key points:
+
+• State persists between renders
+• Updating state triggers re-render (if value changes)
+• Use functional updates when depending on previous state:
+setCount(prev => prev + 1)
+• Do not mutate state directly — always return new objects/arrays
+
+useState is for reactive UI data.
+
+---
+
+2. useEffect (Dependencies & Cleanup)
+
+useEffect handles side effects like:
+
+* API calls
+* Timers
+* Subscriptions
+* DOM updates
+
+useEffect(() => {
+// effect
+return () => {
+// cleanup
+}
+}, [dependencies])
+
+Dependency behavior:
+
+• No array → runs every render
+• [] → runs once on mount
+• [a, b] → runs when a or b changes
+
+Cleanup runs before re-running and on unmount.
+
+Common mistakes:
+• Missing dependencies
+• Infinite loops
+• Not cleaning up effects
+
+useEffect syncs your component with the outside world.
+
+---
+
+3. useRef
+
+useRef creates a persistent mutable object:
+
+const ref = useRef(initialValue)
+
+Key uses:
+
+• Access DOM elements
+• Store values that should NOT trigger re-renders
+
+Changing ref.current does not re-render.
+
+useRef = instance-like storage.
+
+---
+
+4. useMemo and useCallback
+
+Both are performance optimizations.
+
+useMemo → memoizes a computed value
+useCallback → memoizes a function
+
+They recompute only when dependencies change.
+
+Used to:
+• Prevent unnecessary recalculations
+• Prevent unnecessary child re-renders
+
+Do not overuse — only when needed.
+
+---
+
+5. Custom Hooks
+
+Custom hooks extract reusable stateful logic.
+
+Rules:
+• Must start with “use”
+• Can use other hooks
+• Share logic, not state
+
+Benefits:
+• Cleaner components
+• Reusable logic
+• Better structure
+
+Each usage gets its own state.
+
+---
+
+6. Context API
+
+Context shares global data without prop drilling.
+
+Used for:
+• Auth
+• Theme
+• Language
+• Global state
+
+When context value changes, all consumers re-render.
+
+Optimize by:
+• Splitting contexts
+• Memoizing provider values
+
+---
+
+
+useState → store UI state
+useEffect → side effects
+useRef → persistent mutable value
+useMemo → memoized value
+useCallback → memoized function
+Custom hooks → reusable logic
+Context → shared global state

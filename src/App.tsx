@@ -6,11 +6,13 @@ import Counter from "./components/Counter";
 import FormValidation from "./components/FormValidation";
 import ItemList from "./components/ItemList";
 
+import { UsersProvider } from "./context/UsersProvider";
+
 export default function App() {
   const [view, setView] = useState("counter");
 
   return (
-    <>
+    <UsersProvider>
       <Header />
 
       <Navbar view={view} setView={setView} />
@@ -20,6 +22,7 @@ export default function App() {
         {view === "form" && <FormValidation />}
         {view === "list" && <ItemList />}
       </div>
-    </>
+
+    </UsersProvider>
   );
 }
