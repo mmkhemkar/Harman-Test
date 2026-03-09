@@ -23,7 +23,7 @@ export default function App() {
       <div className="container">
         <ErrorBoundary
           FallbackComponent={ErrorFallback}
-          // onReset={() => setView("counter")}
+          onReset={() => setView("counter")}
           resetKeys={[view]}
         >
           <Suspense fallback={<h3>Loading...</h3>}>
