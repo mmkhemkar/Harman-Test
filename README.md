@@ -191,3 +191,108 @@ useMemo → memoized value
 useCallback → memoized function
 Custom hooks → reusable logic
 Context → shared global state
+-------------------------------------
+
+WEEK 3 SUMMARY
+
+1. React 18 Concurrent Features
+React 18 introduced concurrent rendering, which allows React to work on multiple UI updates at the same time and prioritize more important updates. This improves application responsiveness and user experience. React can pause, interrupt, or restart rendering when needed.
+
+Important features include:
+- Automatic batching
+- useTransition
+- useDeferredValue
+
+Example (useTransition):
+const [isPending, startTransition] = useTransition();
+
+function handleSearch(value) {
+  startTransition(() => {
+    setSearchQuery(value);
+  });
+}
+
+Here React treats the update as low priority so the UI stays responsive.
+
+
+2. Performance Optimization
+Performance optimization focuses on improving application speed and reducing unnecessary re-renders. Techniques include memoization, lazy loading, efficient state management, and minimizing bundle size.
+
+Example:
+const filteredUsers = useMemo(() => {
+  return users.filter(user => user.active);
+}, [users]);
+
+This ensures the filtering logic only runs when the users list changes.
+
+
+3. Memoization Strategies
+Memoization is used to cache results of expensive calculations or prevent unnecessary component re-renders.
+
+Common tools:
+- React.memo
+- useMemo
+- useCallback
+
+Example (React.memo):
+const UserCard = React.memo(function UserCard({ name }) {
+  return <h2>{name}</h2>;
+});
+
+The component only re-renders if the props change.
+
+
+Example (useCallback):
+const handleClick = useCallback(() => {
+  console.log("Button clicked");
+}, []);
+
+This prevents the function from being recreated on every render.
+
+
+4. Component Architecture Best Practices
+Good component architecture helps build scalable and maintainable applications. Components should be small, reusable, and focused on a single responsibility. Logic should be separated from UI using custom hooks.
+
+Example:
+
+function useCounter() {
+  const [count, setCount] = useState(0);
+  return { count, setCount };
+}
+
+function Counter() {
+  const { count, setCount } = useCounter();
+  return <button onClick={() => setCount(count + 1)}>{count}</button>;
+}
+
+Here the logic is reusable through a custom hook.
+
+
+5. Error Boundaries
+Error boundaries are React components that catch JavaScript errors in their child component tree during rendering. Instead of crashing the entire app, they display a fallback UI.
+
+Example:
+
+<ErrorBoundary FallbackComponent={ErrorFallback}>
+  <Counter />
+</ErrorBoundary>
+
+Fallback component example:
+
+function ErrorFallback({ error }) {
+  return <h2>Something went wrong: {error.message}</h2>;
+}
+
+
+6. Code Splitting and Lazy Loading
+Code splitting improves performance by splitting the application bundle into smaller chunks that load only when needed.
+
+Example:
+
+const Counter = React.lazy(() => import("./Counter"));
+
+<Suspense fallback={<p>Loading...</p>}>
+  <Counter />
+</Suspense>
+
+React loads the Counter component only when it is required, which reduces the initial bundle size and improves page load time.

@@ -2,6 +2,11 @@ import { useState } from "react";
 
 export default function Counter() {
   const [count, setCount] = useState(0);
+  const [crash, setCrash] = useState(false);
+
+  if (crash) {
+    throw new Error("Counter crashed!");
+  }
 
   const handleDecrease = () => {
     setCount((prev) => (prev > 0 ? prev - 1 : 0));
@@ -32,6 +37,13 @@ export default function Counter() {
           onClick={() => setCount(0)}
         >
           Reset
+        </button>
+
+        <button
+          className="btn reset"
+          onClick={() => setCrash(true)}
+        >
+          Crash Component
         </button>
       </div>
     </div>

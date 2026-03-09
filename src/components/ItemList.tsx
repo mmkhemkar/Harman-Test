@@ -3,17 +3,17 @@ import ListItem from "./ListItem";
 
 export default function ItemList() {
   return (
-    <div className="card">
-      <h2>List Rendering with Keys</h2>
+    <div className="card list-card">
+      <h2 className="list-title">List Rendering with Keys</h2>
 
-      <ul>
+      <ol className="item-list">
         {itemsData.map((item) => (
           <ListItem
             key={item.id}
             name={item.name}
           />
         ))}
-      </ul>
+      </ol>
     </div>
   );
 }
