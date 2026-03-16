@@ -296,3 +296,32 @@ const Counter = React.lazy(() => import("./Counter"));
 </Suspense>
 
 React loads the Counter component only when it is required, which reduces the initial bundle size and improves page load time.
+
+
+---------------
+
+WEEK 4 SUMMARY 
+
+
+1. TypeScript
+
+TypeScript is a typed superset of JavaScript that adds static type checking. It helps developers catch errors during development, improves code readability, and provides better IDE support like auto-completion and refactoring. It is widely used in large React applications to make code more maintainable and predictable.
+
+2. Advanced Hooks
+
+Advanced React hooks are used to manage complex logic and optimize performance in functional components. Examples include useMemo for memoizing expensive calculations, useCallback for memoizing functions, useReducer for complex state logic, and custom hooks to reuse logic across multiple components.
+
+3. Context / State Management
+
+State management is used to store and share data across components. React Context helps avoid prop drilling by providing global data access. In larger applications, tools like Redux or other state libraries are used for centralized and predictable state management.
+
+4. Unit Tests (Jest)
+
+Unit testing focuses on testing individual units of code, such as functions, hooks, or components. Jest is a popular testing framework used with React to verify that each piece of logic works correctly in isolation.
+
+5. Basic E2E Tests (Playwright)
+
+End-to-End testing checks the complete application workflow from the user's perspective. Playwright automates browser interactions such as clicking buttons, filling forms, and navigating pages to ensure the entire system works correctly together.
+
+
+
